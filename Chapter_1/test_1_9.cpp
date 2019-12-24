@@ -3,8 +3,8 @@
 #include <netinet/tcp.h>
 #include <errno.h>
 #include <string.h>
-#include<arpa/inet.h>
-#include<unistd.h>
+#include <arpa/inet.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 
     bind(listenfd, (struct sockaddr*) &serveraddr, sizeof(serveraddr));
     printf("%s\n", "bind");
-    listen(listenfd, 1024);
+    listen(listenfd, 128);
     printf("%s\n", "listen");
 
     for ( ; ; ) 

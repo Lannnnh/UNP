@@ -1,15 +1,4 @@
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <errno.h>
-#include <string.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "rw.h"
-
-#define MAXLINE 1024
+#include "../rw.h"
 
 void str_echo(int sockfd)
 {
@@ -38,7 +27,7 @@ int main(int argc, char* argv[])
     servaddr.sin_port = htons(8000);
 
     bind(listenfd, (struct sockaddr*) &servaddr, sizeof(servaddr));
-    listen(listenfd, 128);
+    listen(listenfd, LISTENQ);
 
     for ( ; ; )
     {

@@ -11,6 +11,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAXLINE 1024
+#define LISTENQ 1024
+
 ssize_t readn(int fd, void* vptr, size_t n)
 {
     size_t nleft;

@@ -14,22 +14,23 @@ void str_cli(FILE* fp, int sockfd)
     }
 }
 
-int main(int argc, char* argv[])
+int main(int agrc, char* agrv[])
 {
-    int sockfd;
+    int i, sockfd[5];
     struct sockaddr_in servaddr;
 
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    for (i = 0; i < 5; ++ i )
+    {
+        sockfd[i] = socket(AF_INET, SOCK_STREAM, 0);
 
-    memset(&servaddr, 0, sizeof(servaddr));
-    
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons(8000);
-    inet_pton(AF_INET, argv[1], &servaddr.sin_addr);
+        memset(&servaddr, 0, sizeof(servaddr));
+        servaddr.sin_family = AF_INET;
+        servaddr.sin_port = htons(INADDR_ANY);
+        inet_pton(AF_INET, agrv[1], &servaddr.sin_addr);
 
-    connect(sockfd, (struct sockaddr*) &servaddr, sizeof(servaddr));
-    printf("connect ss: %d\n", sockfd);
-    str_cli(stdin, sockfd);
-    
+        connect(sockfd[i], (struct sockaddr*) &servaddr, sizeof(servaddr));
+    }
+
+    str_cli(stdin, sockfd[0]);
     exit(0);
 }

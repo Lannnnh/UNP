@@ -1,14 +1,4 @@
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <errno.h>
-#include <string.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#define MAXLINE 24
+#include "../rw.h"
 
 int main(int argc, char* argv[])
 {

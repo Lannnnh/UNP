@@ -1,15 +1,5 @@
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <errno.h>
-#include <string.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
-
-#define MAXLINE 1024
+#include "../rw.h"
 
 int main(int argc, char* argv[])
 {
@@ -27,7 +17,7 @@ int main(int argc, char* argv[])
 
     bind(listenfd, (struct sockaddr*) &serveraddr, sizeof(serveraddr));
     printf("%s\n", "bind");
-    listen(listenfd, 128);
+    listen(listenfd, LISTENQ);
     printf("%s\n", "listen");
 
     for ( ; ; ) 

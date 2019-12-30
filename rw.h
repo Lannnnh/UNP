@@ -2,6 +2,7 @@
 #define _RW_H_
 
 #include <sys/socket.h>
+#include <sys/wait.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <errno.h>
@@ -13,6 +14,12 @@
 
 #define MAXLINE 1024
 #define LISTENQ 1024
+
+void err_sys(const char* str) 
+{ 
+    fprintf(stderr, "%s\n", str); 
+    exit(1); 
+}
 
 ssize_t readn(int fd, void* vptr, size_t n)
 {

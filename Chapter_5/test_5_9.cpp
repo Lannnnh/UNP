@@ -5,11 +5,8 @@ void str_cli(FILE* fp, int sockfd)
     char sendLine[MAXLINE], receiveLine[MAXLINE];
     while (fgets(sendLine, MAXLINE, fp) != NULL)
     {
-        // printf("sendline: %s\n", sendLine);
         writen(sockfd, sendLine, strlen(sendLine));
-        // printf("sendline: %s\n", sendLine);
         readline(sockfd, receiveLine, MAXLINE);     
-        // printf("receiveline: %s\n", receiveLine);
         fputs(receiveLine, stdout);
     }
 }
@@ -25,7 +22,7 @@ int main(int agrc, char* agrv[])
 
         memset(&servaddr, 0, sizeof(servaddr));
         servaddr.sin_family = AF_INET;
-        servaddr.sin_port = htons(INADDR_ANY);
+        servaddr.sin_port = htons(5555);
         inet_pton(AF_INET, agrv[1], &servaddr.sin_addr);
 
         connect(sockfd[i], (struct sockaddr*) &servaddr, sizeof(servaddr));

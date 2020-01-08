@@ -39,7 +39,7 @@ int main(int agrc, char* argv[])
     bind(listenfd, (struct sockaddr*) &servaddr, sizeof(servaddr));
 
     listen(listenfd, LISTENQ);
-
+    // SIGCHLD信号，在一个进程终止或者停止时，将SIGCHLD信号发送给父进程，默认忽略该信号。若父进程想被告知子进程的该状态，就要捕捉该信号。
     signal(SIGCHLD, sig_chld);
 
     for ( ; ; )

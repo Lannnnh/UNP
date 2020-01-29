@@ -5,11 +5,10 @@ void str_cli(FILE* fp, int sockfd)
     char sendLine[MAXLINE], receiveLine[MAXLINE];
     while (fgets(sendLine, MAXLINE, fp) != NULL)
     {
-        // printf("sendline: %s\n", sendLine);
         writen(sockfd, sendLine, strlen(sendLine));
-        // printf("sendline: %s\n", sendLine);
+        
         readline(sockfd, receiveLine, MAXLINE);     
-        // printf("receiveline: %s\n", receiveLine);
+        
         fputs(receiveLine, stdout);
     }
 }

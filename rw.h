@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stropts.h>
+#include <poll.h>
 
 #define MAXLINE 1024
 #define LISTENQ 1024

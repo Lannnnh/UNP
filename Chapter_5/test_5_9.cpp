@@ -11,7 +11,7 @@ void str_cli(FILE* fp, int sockfd)
     }
 }
 
-int main(int agrc, char* agrv[])
+int main(int argc, char* argv[])
 {
     int i, sockfd[5];
     struct sockaddr_in servaddr;
@@ -23,7 +23,7 @@ int main(int agrc, char* agrv[])
         memset(&servaddr, 0, sizeof(servaddr));
         servaddr.sin_family = AF_INET;
         servaddr.sin_port = htons(5555);
-        inet_pton(AF_INET, agrv[1], &servaddr.sin_addr);
+        inet_pton(AF_INET, argv[1], &servaddr.sin_addr);
 
         connect(sockfd[i], (struct sockaddr*) &servaddr, sizeof(servaddr));
     }

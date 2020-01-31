@@ -20,8 +20,9 @@ void str_cli(FILE* fp, int sockfd)
         // sockfd是可读的
         if (FD_ISSET(sockfd, &rset))
         {
-            if ((n == read(sockfd, buf, MAXLINE) == 0))
+            if ((n = read(sockfd, buf, MAXLINE)) == 0)
             {
+                // stdineof代表stdin缓冲区是否读取结束
                 if (stdineof == 1) return ; // 正常结束
                 else err_sys("terminate prematurely");
             }
@@ -31,7 +32,8 @@ void str_cli(FILE* fp, int sockfd)
         // fp是可读的
         if (FD_ISSET(fileno(fp), &rset))
         {
-            if ((n == read(fileno(fp), buf, MAXLINE) == 0))
+            // 从fp读取不到数据(EOF)时，关闭fp的写，并且从FD_SET中删除
+            if ((n = read(fileno(fp), buf, MAXLINE)) == 0)
             {
                 stdineof = 1;
                 shutdown(sockfd, SHUT_WR);
@@ -41,4 +43,23 @@ void str_cli(FILE* fp, int sockfd)
             write(sockfd, buf, n);
         }
     }
+}
+
+int main(int argc, char* argv[])
+{
+    int i, sockfd;
+    struct sockaddr_in servaddr;
+
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    memset(&servaddr, 0, sizeof(servaddr));
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_port = htons(5555);
+    if (inet_pton(AF_INET, argv[1], &servaddr.sin_addr) < 0)
+        printf("%s\n", "inet_pton fail");
+
+    connect(sockfd, (struct sockaddr*) &servaddr, sizeof(servaddr));
+
+    str_cli(stdin, sockfd);
+    exit(0);
 }

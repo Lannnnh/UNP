@@ -1,18 +1,16 @@
 #include "../rw.h"
 
+#define NDG 2000
+#define DGLEN 1400
+
 void dg_cli(FILE* fp, int sockfd, const struct sockaddr* pservaddr, socklen_t servlen)
 {
-    int n;
-    char sendLine[MAXLINE], recvLine[MAXLINE];
+    int i;
+    char sendLine[MAXLINE];
 
-    while (fgets(sendLine, MAXLINE, fp) != NULL)
+    for (int i = 0; i < NDG; ++ i )
     {
-        sendto(sockfd, sendLine, MAXLINE, 0, pservaddr, servlen);
-
-        n = recvfrom(sockfd, recvLine, MAXLINE, 0, NULL, NULL);
-
-        recvLine[n] = 0;
-        fputs(recvLine, stdout);
+        sendto(sockfd, sendLine, DGLEN, 0, pservaddr, servlen);
     }
 }
 

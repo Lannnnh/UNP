@@ -93,4 +93,19 @@ ssize_t readline(int fd, void* vptr, size_t maxlen)
     return n;
 }
 
+char* sock_ntop(const struct sockaddr* sa, socklen_t salen)
+{
+    char portstr[8];
+    static char str[128];
+    struct sockaddr_in *sin = (struct sockaddr_in *) sa;
+    if (inet_ntop(AF_INET, &sin->sin_addr, str, sizeof(str)) == NULL)
+        return(NULL);
+    if (ntohs(sin->sin_port) != 0) {
+        snprintf(portstr, sizeof(portstr), ":%d", ntohs(sin->sin_port));
+        strcat(str, portstr);
+        }
+    return(str);
+}
+
+
 #endif // end _RW_H_

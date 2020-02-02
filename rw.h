@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <algorithm>
 #include <sys/wait.h>
+#include <fcntl.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <errno.h>

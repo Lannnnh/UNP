@@ -65,7 +65,11 @@ int main(int argc, char* argv[])
                     client[i] = -1;
                     FD_CLR(sockfd, &allset);
                 }
-                else write(sockfd, buf, n);
+                else 
+                {
+                    write(sockfd, buf, n);
+                    printf("wrote %d biytes to sockfd\n", n);
+                }
 
                 if (--nready <= 0) break;
             }

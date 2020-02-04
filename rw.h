@@ -15,6 +15,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <sys/uio.h>
+#include <pthread.h>
 #include <sys/stropts.h>
 #include <poll.h>
 

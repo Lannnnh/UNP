@@ -43,9 +43,45 @@ int main(int argc, char* argv[])
 static void* doit(void* arg)
 {
     pthread_detach(pthread_self());
-    str_echo((int) arg);
-    close((int) arg);
+    str_echo((long) (arg));
+    close((long) arg);
     return NULL;
 }
+
+/* 
+给新线程传递参数
+
+1. 传入引用值作为参数，connfd变量在每次调用accept的时候都会被覆写，多线程不是同步的访问一个共享变量
+pthread_create(&tid, NULL, doit, &connfd);
+
+static void* doit(void* arg)
+{
+    pthread_detach(pthread_self());
+    str_echo(*(int*) (arg));
+    close(*(int*) arg);
+    return NULL;
+}
+
+解决方法
+2. 调用malloc分配一个整数变量的内存空间，用于存放有待accept返回的已连接描述符，每个线程都有各自的已连接描述符版本。
+int* iptr;
+iptr = malloc(sizeof(int));
+*iptr = accept(listenfd, (struct sockaddr*) &cliaddr, &clilen);
+pthread_create(&tid, NULL, doit, iptr);
+
+static void* doit(void* arg)
+{
+    int connfd;
+
+    connfd = *((int*) arg);
+    free(arg);
+
+    pthread_detach(pthread_self());
+    str_echo(connfd);
+    close(connfd);
+    return NULL;
+}
+*/
+
 
 
